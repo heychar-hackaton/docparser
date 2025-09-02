@@ -76,6 +76,27 @@ curl -s -X POST http://localhost:8080/extract \
 {"success": false, "text": "exec: \"pdftotext\": executable file not found in $PATH"}
 ```
 
+### Extract (Batch)
+```bash
+curl -s -X POST http://localhost:8080/extract/batch \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "files": [
+          {"filename": "a.txt", "content_base64": "SGVsbG8h"},
+          {"filename": "b.rtf", "content_base64": "{\\rtf1...}"}
+        ]
+      }'
+```
+Ответ:
+```json
+{
+  "results": [
+    {"filename":"a.txt","success":true,"text":"Hello!"},
+    {"filename":"b.rtf","success":true,"text":"..."}
+  ]
+}
+```
+
 ## Формат ответа
 - Успех: `{ "success": true, "text": "...извлечённый текст..." }`
 - Ошибка: `{ "success": false, "text": "описание ошибки" }`
